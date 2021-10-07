@@ -1,7 +1,17 @@
-def print_hi(name):
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import random
+
+
+def rand_num_gen():
+    question_num = random.randint(1, 891)
+    return question_num
 
 
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    aws_test_file = "aws_test.txt"
+
+    while True:
+        question_from_text = rand_num_gen()
+        print(question_from_text)
+
+
 
