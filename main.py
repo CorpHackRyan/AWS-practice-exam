@@ -15,7 +15,9 @@ if __name__ == '__main__':
         for i, line in enumerate(searchlines):
             if str(question_from_text) == line.rstrip():
                 question_index = i
-                print("LINE NUMBER: " + str(question_index+1))
+                question_num = line.split(' ')[1]
+                print("LINE NUMBER: " + str(question_index + 1))
+                print("QUESTION NUMBER: " + question_num)
                 print("QUESTION: " + searchlines[question_index + 1].rstrip())
                 print("OPTIONS:")
                 option_index = question_index + 2
