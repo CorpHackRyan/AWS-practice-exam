@@ -1,4 +1,5 @@
 import random
+import time
 
 def rand_num_gen():
     question_num = random.randint(1, 891)
@@ -7,6 +8,7 @@ def rand_num_gen():
 if __name__ == '__main__':
     total_questions = 0
     correct_answers = 0
+    start_time = time.time()
 
     keep_going = True
     while keep_going:
@@ -23,7 +25,10 @@ if __name__ == '__main__':
                         break
                     print(searchlines[j].strip())
                 total_questions += 1
+                question_start_time = time.time()
                 user_answer = input("Enter your answer: ")
+                question_elapsed_time = time.time() - question_start_time
+                print(f"Time taken for this question: {question_elapsed_time//60:.0f} minutes and {question_elapsed_time%60:.0f} seconds")
                 if user_answer.strip() == correct_answer:
                     correct_answers += 1
                     print("Correct!")
@@ -31,5 +36,7 @@ if __name__ == '__main__':
                     print(f"Incorrect! The correct answer is {correct_answer}")
                 break
         score = correct_answers/total_questions * 100
+        elapsed_time = time.time() - start_time
         print(f"Score: {correct_answers}/{total_questions} ({score:.2f}%)")
+        print(f"Total time taken: {elapsed_time//3600:.0f} hours and {(elapsed_time%3600)//60:.0f} minutes")
         keep_going = input("Do you want to continue? (y/n) ") == 'y'
