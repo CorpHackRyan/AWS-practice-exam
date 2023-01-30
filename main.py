@@ -1,10 +1,8 @@
 import random
 
-
 def rand_num_gen():
     question_num = random.randint(1, 891)
     return question_num
-
 
 if __name__ == '__main__':
 
@@ -16,8 +14,14 @@ if __name__ == '__main__':
             searchlines = aws_test_file.readlines()
         for i, line in enumerate(searchlines):
             if str(question_from_text) == line.rstrip():
-                print("    LINE #: " + str(i+1))
-                print("LINE VALUE: " + line)
-            keep_going = False
-
-        #print(question_from_text)
+                question_index = i
+                print("LINE NUMBER: " + str(question_index+1))
+                print("QUESTION: " + searchlines[question_index + 1].rstrip())
+                print("OPTIONS:")
+                option_index = question_index + 2
+                while "Correct Answer" not in searchlines[option_index]:
+                    print(searchlines[option_index].rstrip())
+                    option_index += 1
+                correct_answer = searchlines[option_index].split(': ')[1].rstrip()
+                print("\nCorrect Answer: " + correct_answer)
+                keep_going = False
