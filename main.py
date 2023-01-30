@@ -1,18 +1,23 @@
 import random
 import time
 
-def rand_num_gen():
+def rand_num_gen(used_numbers):
     question_num = random.randint(1, 891)
+    while question_num in used_numbers:
+        question_num = random.randint(1, 891)
     return question_num
 
 if __name__ == '__main__':
     total_questions = 0
     correct_answers = 0
     start_time = time.time()
+    used_numbers = []
 
     keep_going = True
+    incorrect_responses = []
     while keep_going:
-        question_from_text = "QUESTION " + str(rand_num_gen())
+        question_from_text = "QUESTION " + str(rand_num_gen(used_numbers))
+        used_numbers.append(int(question_from_text.split(" ")[1]))
         with open("aws_test.txt", "r") as aws_test_file:
             searchlines = aws_test_file.readlines()
         for i, line in enumerate(searchlines):
@@ -34,6 +39,7 @@ if __name__ == '__main__':
                     print("Correct!")
                 else:
                     print(f"Incorrect! The correct answer is {correct_answer}")
+                    incorrect_responses.append(question_from_text + " - Incorrect answer: " + user_answer)
                 break
         score = correct_answers/total_questions * 100
         elapsed_time = time.time() - start_time
@@ -41,3 +47,8 @@ if __name__ == '__main__':
         print(f"Time taken for this question: {question_elapsed_time // 60:.0f} minutes and {question_elapsed_time % 60:.0f} seconds")
         print(f"Total time taken: {elapsed_time//3600:.0f} hours and {(elapsed_time%3600)//60:.0f} minutes")
         keep_going = input("\n" + "Do you want to continue? (y/n) ") == 'y'
+
+    if incorrect_responses:
+        with open("incorrect_responses.txt", "w") as f:
+            for response in incorrect_responses:
+                f.write(response + "\n")
